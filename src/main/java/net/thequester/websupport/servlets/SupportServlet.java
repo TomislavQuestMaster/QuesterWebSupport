@@ -1,7 +1,8 @@
 package net.thequester.websupport.servlets;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
+import net.thequester.websupport.model.Response;
+import net.thequester.websupport.serializator.JsonSerializer;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,8 @@ public class SupportServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        response.getWriter().print("Hello form servlet");
+        JsonSerializer serializator = new JsonSerializer();
+        response.getWriter().print(serializator.serialize(new Response(1,"Hey")));
 
     }
 }
