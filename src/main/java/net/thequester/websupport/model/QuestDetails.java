@@ -6,20 +6,24 @@ package net.thequester.websupport.model;
 public class QuestDetails {
 
     private int id;
-    private String name;
+    private String questName;
     private String description;
     private double latitude;
     private double longitude;
+    private QuestType questType;
+    private String url;
 
     public QuestDetails() {
     }
 
-    public QuestDetails(int id, String name, String description, double latitude, double longitude) {
+    public QuestDetails(int id, String questName, String description, double latitude, double longitude, QuestType questType, String url) {
         this.id = id;
-        this.name = name;
+        this.questName = questName;
         this.description = description;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.questType = questType;
+        this.url = url;
     }
 
     public int getId() {
@@ -30,12 +34,12 @@ public class QuestDetails {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getQuestName() {
+        return questName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setQuestName(String questName) {
+        this.questName = questName;
     }
 
     public String getDescription() {
@@ -60,5 +64,21 @@ public class QuestDetails {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public QuestType getQuestType() {
+        return questType;
+    }
+
+    public void setQuestType(QuestType questType) {
+        this.questType = questType;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
