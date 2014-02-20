@@ -2,11 +2,14 @@ package net.thequester.websupport.database;
 
 import net.thequester.websupport.model.Filter;
 import net.thequester.websupport.model.QuestDetails;
+import net.thequester.websupport.model.QuestType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author tdubravcevic
@@ -20,26 +23,43 @@ public class Database {
 		this.connection = connection;
 	}
 
-	public ResultSet getNearbyQuests(Filter filter) throws DatabaseException {
+	public List<QuestDetails> getNearbyQuests(Filter filter) throws DatabaseException {
+
+        List<QuestDetails> quests = new ArrayList<QuestDetails>();
 
         PreparedStatement statement = getPreparedStatement(
                 "SELECT * FROM quests WHERE " +
-                        "acos(sin(?) * sin(latitude) + cos(?) * cos(latitude) * cos(longitude - ?))*(180/pi())*60*1.1515*1609.344 <= ?");
+                        "acos(sin(?) * sin(latitude*pi()/180) +" +
+                        " cos(?) * cos(latitude*pi()/180) * cos(longitude*pi()/180 - ?))*6366000 <= ?");
 
         try {
-            statement.setDouble(1, filter.getLatitude());
-            statement.setDouble(2, filter.getLatitude());
-            statement.setDouble(3, filter.getLongitude());
+            statement.setDouble(1, filter.getLatitude()*Math.PI/180);
+            statement.setDouble(2, filter.getLatitude()*Math.PI/180);
+            statement.setDouble(3, filter.getLongitude()*Math.PI/180);
             statement.setDouble(4, filter.getRadius());
 
-            return statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()){
+            quests.add(new QuestDetails(
+                        resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getDouble(4),
+                        resultSet.getDouble(5),
+                        QuestType.valueOf(resultSet.getString(6)),
+                        resultSet.getString(7)
+                        ));
+            }
+            return quests;
 
         } catch (SQLException e) {
             throw new DatabaseException("Failed to query quests by location " + e.getMessage());
         }
 
     }
-	public void insertQuestDetails(QuestDetails details) throws DatabaseException {
+
+    public void insertQuestDetails(QuestDetails details) throws DatabaseException {
 
 		PreparedStatement statement = getPreparedStatement(
                 "INSERT INTO quests(id, questName, description, latitude, longitude, questType, url) VALUES (?, ?, ?, ?, ?, ?, ?)");
