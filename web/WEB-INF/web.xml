@@ -28,4 +28,13 @@
         <url-pattern>/support</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>DownloadServlet</servlet-name>
+        <servlet-class>net.thequester.websupport.servlets.DownloadServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DownloadServlet</servlet-name>
+        <url-pattern>/download</url-pattern>
+    </servlet-mapping>
+
 </web-app>
