@@ -1,7 +1,9 @@
 package net.thequester.websupport.servlets;
 
-import net.thequester.websupport.model.Response;
+import net.thequester.websupport.database.Database;
+import net.thequester.websupport.model.Filter;
 import net.thequester.websupport.serializator.JsonSerializer;
+import net.thequester.websupport.utility.Utilites;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -17,25 +19,30 @@ import java.io.OutputStream;
  */
 public class DownloadServlet extends HttpServlet {
 
+	private final JsonSerializer serializer = new JsonSerializer();
+	private final Database database = new Database(Utilites.getLocalConnection());
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String body = Utilites.getBody(request);
 
-        response.setContentType("text/plain");
-        response.setHeader("Content-Disposition", "attachment;filename=quest.txt");
-        ServletContext ctx = getServletContext();
-        InputStream is = ctx.getResourceAsStream("/file.txt");
+		response.setContentType("text/plain");
+		response.setHeader("Content-Disposition", "attachment;filename=quest.txt");
+		ServletContext ctx = getServletContext();
+		InputStream is = ctx.getResourceAsStream("/quests/tomo/1_" + body + ".txt");
 
-        int read=0;
-        byte[] bytes = new byte[1024];
-        OutputStream os = response.getOutputStream();
+		int read;
+		byte[] bytes = new byte[1024];
+		OutputStream os = response.getOutputStream();
 
-        while((read = is.read(bytes))!= -1){
-            os.write(bytes, 0, read);
-        }
-        os.flush();
-        os.close();
-    }
+		while ((read = is.read(bytes)) != -1) {
+			os.write(bytes, 0, read);
+		}
+		os.flush();
+		os.close();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	}
 }

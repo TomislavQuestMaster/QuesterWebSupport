@@ -24,7 +24,6 @@ public class Database {
 		this.connection = connection;
 	}
 
-
 	public List<QuestDetails> getNearbyQuests(Filter filter) throws DatabaseException {
 
         List<QuestDetails> quests = new ArrayList<QuestDetails>();
@@ -85,7 +84,6 @@ public class Database {
 		}
 
 	}
-
 
 	public void insertUser(User user) throws DatabaseException {
 
