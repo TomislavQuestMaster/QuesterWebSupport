@@ -3,6 +3,7 @@ package net.thequester.websupport.database;
 import net.thequester.websupport.model.Filter;
 import net.thequester.websupport.model.QuestDetails;
 import net.thequester.websupport.model.QuestType;
+import net.thequester.websupport.model.User;
 import org.junit.Before;
 import org.junit.Test;
 import utility.TestUtils;
@@ -29,15 +30,29 @@ public class DatabaseTest {
 		dropTable(connection, "quests");
 		createQuestsTable(connection);
 
+		dropTable(connection, "users");
+		createUsersTable(connection);
+
+
 		database = new Database(connection);
 	}
 
 	@Test
-	public void inserting() throws DatabaseException {
+	public void insertingQuestDetails() throws DatabaseException {
 
 		QuestDetails details = new QuestDetails(0, "prvi", "", 1, 1, QuestType.TOURIST, "");
 
 		database.insertQuestDetails(details);
+	}
+
+	@Test
+	public void insertingUser() throws DatabaseException {
+
+		User user1 = new User("tomo", "1234", "tomo@gmail.com");
+		User user2 = new User("ja", "1234", "ja@gmail.com");
+
+		database.insertUser(user1);
+		database.insertUser(user2);
 	}
 
 	@Test
@@ -49,12 +64,12 @@ public class DatabaseTest {
 		Filter filter = new Filter(45.793364, 15.946323, 1114);
 		List<QuestDetails> quests = database.getNearbyQuests(filter);
 
-		assertEquals(1,quests.size());
+		assertEquals(1, quests.size());
 
-        filter = new Filter(45.793364, 15.946323, 1113);
-        quests = database.getNearbyQuests(filter);
+		filter = new Filter(45.793364, 15.946323, 1113);
+		quests = database.getNearbyQuests(filter);
 
-        assertEquals(0,quests.size());
+		assertEquals(0, quests.size());
 	}
 
 	private boolean createQuestsTable(Connection connection) {
@@ -67,10 +82,28 @@ public class DatabaseTest {
 		}
 
 		try {
-			stmt.execute("CREATE TABLE quests( id INT AUTO_INCREMENT, questName varchar(128), description varchar(500)"
-					+
-					", latitude double, longitude double, questType varchar(128), url varchar(128)" +
-					", primary key (id));");
+			stmt.execute("CREATE TABLE quests( id INT AUTO_INCREMENT, questName varchar(128), description varchar(500)" +
+								 ", latitude double, longitude double, questType varchar(128), url varchar(128)" +
+								 ", primary key (id));");
+		} catch (SQLException e) {
+			return false;
+		}
+		return true;
+	}
+
+	private boolean createUsersTable(Connection connection) {
+
+		Statement stmt;
+		try {
+			stmt = connection.createStatement();
+		} catch (SQLException e) {
+			return false;
+		}
+
+		try {
+			stmt.execute(
+					"CREATE TABLE users( id INT AUTO_INCREMENT, username varchar(128), password varchar(500), email varchar(128), " +
+							"primary key (id));");
 		} catch (SQLException e) {
 			return false;
 		}

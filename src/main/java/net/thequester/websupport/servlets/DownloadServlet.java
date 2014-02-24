@@ -24,8 +24,7 @@ public class DownloadServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         response.setContentType("text/plain");
-        response.setHeader("Content-Disposition",
-                "attachment;filename=downloadname.txt");
+        response.setHeader("Content-Disposition", "attachment;filename=quest.txt");
         ServletContext ctx = getServletContext();
         InputStream is = ctx.getResourceAsStream("/file.txt");
 

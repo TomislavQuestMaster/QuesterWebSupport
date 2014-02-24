@@ -3,6 +3,7 @@ package net.thequester.websupport.database;
 import net.thequester.websupport.model.Filter;
 import net.thequester.websupport.model.QuestDetails;
 import net.thequester.websupport.model.QuestType;
+import net.thequester.websupport.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,6 +23,7 @@ public class Database {
 
 		this.connection = connection;
 	}
+
 
 	public List<QuestDetails> getNearbyQuests(Filter filter) throws DatabaseException {
 
@@ -82,6 +84,27 @@ public class Database {
 		}
 
 	}
+
+
+	public void insertUser(User user) throws DatabaseException {
+
+		PreparedStatement statement = getPreparedStatement(
+				"INSERT INTO users(username, password, email) VALUES (?, ?, ?)");
+
+		try {
+
+			statement.setString(1, user.getUsername());
+			statement.setString(2, user.getPassword());
+			statement.setString(3, user.getEmail());
+			statement.executeUpdate();
+
+			statement.close();
+
+		} catch (SQLException e) {
+			throw new DatabaseException("Failed to insert user " + e.getMessage());
+		}
+	}
+
 
 	private PreparedStatement getPreparedStatement(String query) throws DatabaseException {
 
