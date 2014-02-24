@@ -37,4 +37,13 @@
         <url-pattern>/download</url-pattern>
     </servlet-mapping>
 
+	<servlet>
+		<servlet-name>FetchQuestsServlet</servlet-name>
+		<servlet-class>net.thequester.websupport.servlets.FetchQuestsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FetchQuestsServlet</servlet-name>
+		<url-pattern>/fetch</url-pattern>
+	</servlet-mapping>
+
 </web-app>
