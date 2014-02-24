@@ -12,11 +12,19 @@ public class QuestDetails {
     private double longitude;
     private QuestType questType;
     private String url;
+	private String owner;
 
     public QuestDetails() {
     }
 
-    public QuestDetails(int id, String questName, String description, double latitude, double longitude, QuestType questType, String url) {
+    public QuestDetails(int id,
+						String questName,
+						String description,
+						double latitude,
+						double longitude,
+						QuestType questType,
+						String url,
+						String owner) {
         this.id = id;
         this.questName = questName;
         this.description = description;
@@ -24,7 +32,8 @@ public class QuestDetails {
         this.longitude = longitude;
         this.questType = questType;
         this.url = url;
-    }
+		this.owner = owner;
+	}
 
     public int getId() {
         return id;
@@ -81,4 +90,14 @@ public class QuestDetails {
     public void setUrl(String url) {
         this.url = url;
     }
+
+	public String getOwner() {
+
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+
+		this.owner = owner;
+	}
 }

@@ -50,8 +50,8 @@ public class Database {
                         resultSet.getDouble(4),
                         resultSet.getDouble(5),
                         QuestType.valueOf(resultSet.getString(6)),
-                        resultSet.getString(7)
-                        ));
+                        resultSet.getString(7),
+						resultSet.getString(8)));
             }
             return quests;
 
@@ -64,7 +64,7 @@ public class Database {
     public void insertQuestDetails(QuestDetails details) throws DatabaseException {
 
 		PreparedStatement statement = getPreparedStatement(
-                "INSERT INTO quests(id, questName, description, latitude, longitude, questType, url) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                "INSERT INTO quests(id, questName, description, latitude, longitude, questType, url, owner) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
 		try {
 
@@ -75,6 +75,7 @@ public class Database {
 			statement.setDouble(5, details.getLongitude());
 			statement.setString(6, details.getQuestType().toString());
             statement.setString(7, details.getUrl());
+			statement.setString(8, details.getOwner());
 			statement.executeUpdate();
 
 			statement.close();

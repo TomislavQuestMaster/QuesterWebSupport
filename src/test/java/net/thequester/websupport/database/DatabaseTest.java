@@ -40,7 +40,7 @@ public class DatabaseTest {
 	@Test
 	public void insertingQuestDetails() throws DatabaseException {
 
-		QuestDetails details = new QuestDetails(0, "prvi", "", 1, 1, QuestType.TOURIST, "");
+		QuestDetails details = new QuestDetails(0, "prvi", "", 1, 1, QuestType.TOURIST, "", "tomo");
 
 		database.insertQuestDetails(details);
 	}
@@ -58,7 +58,7 @@ public class DatabaseTest {
 	@Test
 	public void distanceQuerying() throws DatabaseException {
 
-		QuestDetails details = new QuestDetails(0, "Cvjetno", "", 45.792646, 15.960657, QuestType.TOURIST, "");
+		QuestDetails details = new QuestDetails(0, "Cvjetno", "", 45.792646, 15.960657, QuestType.TOURIST, "", "tomo");
 		database.insertQuestDetails(details);
 
 		Filter filter = new Filter(45.793364, 15.946323, 1114);
@@ -83,7 +83,7 @@ public class DatabaseTest {
 
 		try {
 			stmt.execute("CREATE TABLE quests( id INT AUTO_INCREMENT, questName varchar(128), description varchar(500)" +
-								 ", latitude double, longitude double, questType varchar(128), url varchar(128)" +
+								 ", latitude double, longitude double, questType varchar(128), url varchar(128), owner varchar(128)" +
 								 ", primary key (id));");
 		} catch (SQLException e) {
 			return false;
