@@ -5,7 +5,7 @@ import net.thequester.websupport.database.DatabaseException;
 import net.thequester.websupport.model.Filter;
 import net.thequester.websupport.model.QuestDetails;
 import net.thequester.websupport.serializator.JsonSerializer;
-import net.thequester.websupport.utility.Utilites;
+import net.thequester.websupport.utility.Utilities;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,11 +20,11 @@ import java.util.List;
 public class FetchQuestsServlet extends HttpServlet {
 
 	private final JsonSerializer serializer = new JsonSerializer();
-	private final Database database = new Database(Utilites.getLocalConnection());
+	private final Database database = new Database(Utilities.getLocalConnection());
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String body = Utilites.getBody(request);
+		String body = Utilities.getBody(request);
 		Filter filter = (Filter) serializer.deserialize(body, Filter.class);
 
 		List<QuestDetails> quests;

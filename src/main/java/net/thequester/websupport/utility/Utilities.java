@@ -1,14 +1,18 @@
 package net.thequester.websupport.utility;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 /**
  * @author tdubravcevic
  */
-public class Utilites {
+public class Utilities {
 
 	public static String getBody(HttpServletRequest request){
 
@@ -41,4 +45,17 @@ public class Utilites {
 			return null;
 		}
 	}
+
+    public static void writeToResponse(InputStream is, HttpServletResponse response) throws IOException {
+
+        OutputStream os = response.getOutputStream();
+
+        int read;
+        byte[] bytes = new byte[1024];
+        while ((read = is.read(bytes)) != -1) {
+            os.write(bytes, 0, read);
+        }
+        os.flush();
+        os.close();
+    }
 }

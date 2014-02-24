@@ -1,9 +1,9 @@
 package net.thequester.websupport.servlets;
 
-import net.thequester.websupport.database.Database;
-import net.thequester.websupport.model.Filter;
+import net.thequester.websupport.FileManager;
+import net.thequester.websupport.model.QuestDetails;
 import net.thequester.websupport.serializator.JsonSerializer;
-import net.thequester.websupport.utility.Utilites;
+import net.thequester.websupport.utility.Utilities;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 /**
  * Created by Tomo.
@@ -20,26 +19,18 @@ import java.io.OutputStream;
 public class DownloadServlet extends HttpServlet {
 
 	private final JsonSerializer serializer = new JsonSerializer();
-	private final Database database = new Database(Utilites.getLocalConnection());
+	private final FileManager manager = new FileManager();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String body = Utilites.getBody(request);
+		String body = Utilities.getBody(request);
+        QuestDetails quest = (QuestDetails) serializer.deserialize(body, QuestDetails.class);
 
-		response.setContentType("text/plain");
-		response.setHeader("Content-Disposition", "attachment;filename=quest.txt");
-		ServletContext ctx = getServletContext();
-		InputStream is = ctx.getResourceAsStream("/quests/tomo/1_" + body + ".txt");
+		response.setContentType("application/zip");
+		response.setHeader("Content-Disposition", "attachment;filename=quest.zip");
 
-		int read;
-		byte[] bytes = new byte[1024];
-		OutputStream os = response.getOutputStream();
-
-		while ((read = is.read(bytes)) != -1) {
-			os.write(bytes, 0, read);
-		}
-		os.flush();
-		os.close();
+		InputStream inputStream = getServletContext().getResourceAsStream(manager.getQuestLocation(quest));
+        Utilities.writeToResponse(inputStream, response);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

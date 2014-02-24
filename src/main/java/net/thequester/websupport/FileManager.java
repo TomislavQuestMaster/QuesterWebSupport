@@ -1,5 +1,6 @@
 package net.thequester.websupport;
 
+import net.thequester.websupport.model.QuestDetails;
 import net.thequester.websupport.model.User;
 
 import java.io.File;
@@ -15,4 +16,9 @@ public class FileManager {
 		return dir.mkdir();
 
 	}
+
+    public String getQuestLocation(QuestDetails quest){
+
+        return "/quests/" + quest.getOwner() + "/" + quest.getId() + "_" + quest.getQuestName() + ".zip";
+    }
 }
