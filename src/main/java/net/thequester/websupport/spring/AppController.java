@@ -1,6 +1,7 @@
 package net.thequester.websupport.spring;
 
 import net.thequester.model.Connection;
+import net.thequester.model.Event;
 import net.thequester.model.Node;
 import net.thequester.model.Quest;
 import org.springframework.stereotype.Controller;
@@ -21,10 +22,18 @@ public class AppController {
 
     public static Quest quest = new Quest();
 
+    @RequestMapping(value="/event", method=RequestMethod.GET)
+    public ModelAndView addEventPage() {
+        ModelAndView modelAndView = new ModelAndView("addEvent");
+
+        modelAndView.addObject("event", new Event());
+        return modelAndView;
+    }
+
     @RequestMapping(value="/add", method=RequestMethod.GET)
     public ModelAndView addNodePage() {
         ModelAndView modelAndView = new ModelAndView("addNode");
-
+        modelAndView.addObject("nodes", quest.getNodes());
         modelAndView.addObject("node", new Node());
         return modelAndView;
     }
@@ -40,15 +49,10 @@ public class AppController {
     @RequestMapping(value="/add", method=RequestMethod.POST)
     public ModelAndView addingNode(@ModelAttribute Node node) throws JAXBException {
 
-        ModelAndView modelAndView = new ModelAndView("hello");
         quest.getNodes().add(node);
-
         marshall();
 
-        String message = "Node was successfully added.";
-        modelAndView.addObject("name", message);
-
-        return modelAndView;
+        return addNodePage();
     }
 
     @RequestMapping(value="/connect", method=RequestMethod.POST)
