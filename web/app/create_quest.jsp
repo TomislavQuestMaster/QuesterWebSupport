@@ -14,33 +14,22 @@
         var markers = new Array();
         var map, myLatLng, mapOptions, marker;
 
-
-        function addMarker(event, map) {
+        function addMarker(latLng, map) {
 
             var marker = new google.maps.Marker({
                 map: map,
                 visible: true,
-                position: event.latLng,
+                position: latLng,
                 title: 'Untitled checkpoint'
-            });
-            marker.setPosition(event.latLng);
-            var n = markers.length.toString();
-
-            markers.push({
-                Marker: marker,
-                parrent: -1,
-                child: -1
             });
 
         }
 
-
         function initialize() {
 
-            var someValue = "${someValue}";
-            alert(someValue);
-
+            var locations = "${questLocations}";
             myLatlng = new google.maps.LatLng(45.81497, 15.97851);
+
             mapOptions = {
                 zoom: 15,
                 center: myLatlng,
@@ -51,8 +40,14 @@
             map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
             google.maps.event.addListener(map, 'click', function (event) {
-                addMarker(event, map);
+                addMarker(event.latLng, map);
             });
+
+            $.each(locations, function(propName, value){
+                console.log(propName + ": " + value);
+            });
+            //var location = new google.maps.LatLng(latitude, longitude);
+            //addMarker(location, map);
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);

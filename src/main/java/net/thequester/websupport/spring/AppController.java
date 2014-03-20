@@ -1,9 +1,6 @@
 package net.thequester.websupport.spring;
 
-import net.thequester.model.Connection;
-import net.thequester.model.Event;
-import net.thequester.model.Node;
-import net.thequester.model.Quest;
+import net.thequester.model.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,6 +18,13 @@ import java.nio.file.Paths;
 public class AppController {
 
     public static Quest quest = new Quest();
+
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView goToCreatePage(){
+        ModelAndView mv = new ModelAndView("create_quest");
+        mv.addObject("questLocation",new QuestLocation(45.81497, 15.97851));
+        return mv;
+    }
 
     @RequestMapping(value="/event", method=RequestMethod.GET)
     public ModelAndView addEventPage() {
