@@ -24,7 +24,7 @@ import java.util.Properties;
 
 @Configuration
 @ComponentScan("net.thequester")
-@EnableWebMvc
+//@EnableWebMvc
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
 @EnableJpaRepositories("net.thequester")
@@ -79,7 +79,7 @@ public class WebAppConfig {
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
         return transactionManager;
     }
-
+    /*
     @Bean
     public UrlBasedViewResolver setupViewResolver() {
         UrlBasedViewResolver resolver = new UrlBasedViewResolver();
@@ -88,5 +88,5 @@ public class WebAppConfig {
         resolver.setViewClass(JstlView.class);
         return resolver;
     }
-
+    */
 }
