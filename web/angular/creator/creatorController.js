@@ -48,6 +48,21 @@ app.controller("CreatorController", function ($scope, $filter, $log) {
                 latitude: 42.641900799999990000,
                 longitude: 18.106484899999940000
             }
+        },
+        {
+            id: 1,
+            radius: 50,
+            location: {
+                latitude: 42.64300799999990000,
+                longitude: 18.106484899999940000
+            }
+        }
+    ];
+
+    $scope.links = [
+        {
+            from: 0,
+            to: 1
         }
     ];
 

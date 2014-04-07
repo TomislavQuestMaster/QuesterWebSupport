@@ -23,8 +23,9 @@
         <google-map center="map.center" zoom="map.zoom" draggable="true" events="map.events">
 
             <marker ng-repeat="marker in markers" coords="marker.location" events="markerClickEvent"></marker>
+            <!--
             <circle ng-repeat="marker in markers" center="marker.location" radius="marker.radius" fill="circle.fill" stroke="circle.stroke"></circle>
-
+            -->
         </google-map>
     </div>
     <div class="col-lg-4 col-md-4">
