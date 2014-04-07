@@ -3,9 +3,20 @@ package net.thequester.websupport.model;
 /**
  * Created by Tomo.
  */
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="quests")
 public class QuestDetails {
 
-    private int id;
+    @Id
+    @GeneratedValue
+    private Long id;
+
     private String questName;
     private String description;
     private double latitude;
@@ -17,7 +28,7 @@ public class QuestDetails {
     public QuestDetails() {
     }
 
-    public QuestDetails(int id,
+    public QuestDetails(Long id,
 						String questName,
 						String description,
 						double latitude,
@@ -25,7 +36,6 @@ public class QuestDetails {
 						QuestType questType,
 						String url,
 						String owner) {
-        this.id = id;
         this.questName = questName;
         this.description = description;
         this.latitude = latitude;
@@ -35,11 +45,11 @@ public class QuestDetails {
 		this.owner = owner;
 	}
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

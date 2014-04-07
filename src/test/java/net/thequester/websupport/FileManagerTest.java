@@ -24,7 +24,7 @@ public class FileManagerTest {
     public void getLocationTest(){
 
         QuestDetails details = new QuestDetails();
-        details.setId(1);
+        details.setId(1L);
         details.setQuestName("Cvjetno");
         details.setOwner("tomo");
 

@@ -40,7 +40,7 @@ public class DatabaseTest {
 	@Test
 	public void insertingQuestDetails() throws DatabaseException {
 
-		QuestDetails details = new QuestDetails(0, "prvi", "", 1, 1, QuestType.TOURIST, "", "tomo");
+		QuestDetails details = new QuestDetails(0L, "prvi", "", 1, 1, QuestType.TOURIST, "", "tomo");
 
 		database.insertQuestDetails(details);
 	}
@@ -58,7 +58,7 @@ public class DatabaseTest {
 	@Test
 	public void distanceQuerying() throws DatabaseException {
 
-		QuestDetails details = new QuestDetails(0, "Cvjetno", "", 45.792646, 15.960657, QuestType.TOURIST, "", "tomo");
+		QuestDetails details = new QuestDetails(0L, "Cvjetno", "", 45.792646, 15.960657, QuestType.TOURIST, "", "tomo");
 		database.insertQuestDetails(details);
 
 		Filter filter = new Filter(45.793364, 15.946323, 1114);

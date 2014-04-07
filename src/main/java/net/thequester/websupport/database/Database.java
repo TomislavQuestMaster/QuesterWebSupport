@@ -43,7 +43,7 @@ public class Database {
 
             while(resultSet.next()){
             quests.add(new QuestDetails(
-                        resultSet.getInt(1),
+                        resultSet.getLong(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
                         resultSet.getDouble(4),
@@ -67,7 +67,7 @@ public class Database {
 
 		try {
 
-			statement.setInt(1, details.getId());
+			statement.setLong(1, details.getId());
 			statement.setString(2, details.getQuestName());
 			statement.setString(3, details.getDescription());
 			statement.setDouble(4, details.getLatitude());
