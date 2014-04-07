@@ -6,7 +6,7 @@
          version="3.0">
 
     <welcome-file-list>
-        <welcome-file>hello</welcome-file>
+        <welcome-file>angular/creator.html</welcome-file>
     </welcome-file-list>
 
     <servlet>
