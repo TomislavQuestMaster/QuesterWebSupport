@@ -30,7 +30,7 @@ public class AppController {
     public ModelAndView addEventPage() {
         ModelAndView modelAndView = new ModelAndView("addEvent");
 
-        modelAndView.addObject("event", new Event());
+        //modelAndView.addObject("event", new Event());
         return modelAndView;
     }
 
