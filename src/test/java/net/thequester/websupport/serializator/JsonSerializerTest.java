@@ -33,8 +33,8 @@ public class JsonSerializerTest {
     public void deserializeTest() throws IOException {
 
         Response response = (Response) serializator.deserialize("{\"bla\":1,\"reason\":\"ok\"}", Response.class);
-        assertEquals(1, response.getBla());
-        assertEquals("ok", response.getReason());
+        assertEquals(1, response.getStatus());
+        assertEquals("ok", response.getMessage());
     }
 
 }

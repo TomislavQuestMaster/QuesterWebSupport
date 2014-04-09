@@ -143,11 +143,12 @@
 		    <artifactId>mysql-connector-java</artifactId>
 		    <version>${mysql.connector.java.version}</version>
 	    </dependency>
-	    <dependency>
-		    <groupId>net.sourceforge.jtds</groupId>
-		    <artifactId>jdts-driver</artifactId>
-		    <version>${jdts.driver.version}</version>
-	    </dependency>
+        <dependency>
+            <groupId>net.sourceforge.jtds</groupId>
+            <artifactId>jdts-driver</artifactId>
+            <version>${jdts.driver.version}</version>
+        </dependency>
+
 	    <dependency>
 		    <groupId>org.apache.tomcat</groupId>
 		    <artifactId>tomcat-jdbc</artifactId>

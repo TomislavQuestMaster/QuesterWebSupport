@@ -5,29 +5,29 @@ package net.thequester.websupport.model;
  */
 public class Response {
 
-    private int bla;
-    private String reason;
+    private int status;
+    private String message;
 
     public Response() {}
 
-    public Response(int bla, String reason) {
-        this.bla = bla;
-        this.reason = reason;
+    public Response(int status, String message) {
+        this.status = status;
+        this.message = message;
     }
 
-    public int getBla() {
-        return bla;
+    public int getStatus() {
+        return status;
     }
 
-    public void setBla(int bla) {
-        this.bla = bla;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
-    public String getReason() {
-        return reason;
+    public String getMessage() {
+        return message;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

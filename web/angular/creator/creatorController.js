@@ -1,4 +1,4 @@
-app.controller("CreatorController", function ($scope, $filter, $log) {
+app.controller("CreatorController", function ($scope, $filter, $log, $http) {
 
     $scope.atomic = 0;
     $scope.getId = function () {
@@ -106,6 +106,24 @@ app.controller("CreatorController", function ($scope, $filter, $log) {
     $scope.deleteMarker = function () {
         $scope.markers.splice($scope.markers.indexOf($scope.current), 1);
     };
+
+    $scope.submitData = function () {
+
+        var postData = { status: 0, message: "hello"};
+        $http.post('/app/hook', postData, {headers: {
+                'Content-Type': 'application/json',
+                'dataType': 'application/json',
+                'Accept': 'application/json, text/javascript'}}
+        ).success(function (data, status, headers, config) {
+                alert("yes");
+                $log.log(data, status, headers, config);
+            }).error(function (data, status, headers, config) {
+                alert("noo");
+                $log.log(data, status, headers, config);
+            });
+
+    }
+
 
 
 });
