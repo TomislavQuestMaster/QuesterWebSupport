@@ -1,4 +1,4 @@
-package net.thequester.websupport.spring;
+package net.thequester.websupport.model;
 
 /**
  * Created by Tomo.

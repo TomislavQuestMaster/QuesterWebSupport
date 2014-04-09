@@ -1,6 +1,7 @@
-package net.thequester.websupport.spring;
+package net.thequester.websupport.servlets;
 
 import net.thequester.model.*;
+import net.thequester.websupport.model.Link;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,7 +31,7 @@ public class AppController {
     public ModelAndView addEventPage() {
         ModelAndView modelAndView = new ModelAndView("addEvent");
 
-        modelAndView.addObject("event", new Event());
+        //modelAndView.addObject("event", new Event());
         return modelAndView;
     }
 
