@@ -22,7 +22,7 @@
     <div class="col-lg-8 col-md-8">
         <google-map center="map.center" zoom="map.zoom" draggable="true" events="map.events">
 
-            <marker ng-repeat="marker in markers" coords="marker.location" events="markerClickEvent"></marker>
+            <marker ng-repeat="node in nodes" coords="node.questLocation" events="markerClickEvent"></marker>
             <!--
             <circle ng-repeat="marker in markers" center="marker.location" radius="marker.radius" fill="circle.fill" stroke="circle.stroke"></circle>
             -->
@@ -34,7 +34,7 @@
                 Markers <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li ng-repeat="market in markers">
+                <li ng-repeat="node in nodes">
                     <button type="button" class="btn btn-default">{{$index}}</button>
                 </li>
             </ul>
@@ -42,8 +42,8 @@
         <form ng-hide="hidden">
             <fieldset>
                 <legend>Location</legend>
-                <input type="number" id="lat" placeholder="Latitude" value="{{current.location.latitude}}">
-                <input type="number" id="lon" placeholder="Longitude" value="{{current.location.longitude}}">
+                <input type="number" id="lat" placeholder="Latitude" value="{{current.questLocation.latitude}}">
+                <input type="number" id="lon" placeholder="Longitude" value="{{current.questLocation.longitude}}">
                 <input type="range" id="radius" step="1" max="100" min="1" ng-model="current.radius">
                 {{current.radius}}
             </fieldset>

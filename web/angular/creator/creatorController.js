@@ -40,11 +40,11 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
         }
     };
 
-    $scope.markers = [
+    $scope.nodes = [
         {
             id: 0,
             radius: 50,
-            location: {
+            questLocation: {
                 latitude: 42.641900799999990000,
                 longitude: 18.106484899999940000
             }
@@ -52,12 +52,18 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
         {
             id: 1,
             radius: 50,
-            location: {
+            questLocation: {
                 latitude: 42.64300799999990000,
                 longitude: 18.106484899999940000
             }
         }
     ];
+
+    $scope.quest = {
+
+        id:123,
+        nodes: $scope.nodes
+    };
 
     $scope.links = [
         {
@@ -70,7 +76,7 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
     $scope.current = {
         id: 0,
         radius: 50,
-        location: {
+        questLocation: {
             latitude: 42.641900799999990000,
             longitude: 18.106484899999940000
         }
@@ -78,23 +84,23 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
 
 
     $scope.addNew = function (lat, lon) {
-        var marker = {
+        var node = {
             id: $scope.getId(),
             radius: 50,
-            location: {
+            questLocation: {
                 latitude: lat,
                 longitude: lon
             }
         };
-        $scope.current = marker;
+        $scope.current = node;
 
-        $scope.markers.push(marker);
+        $scope.nodes.push(node);
     };
 
     $scope.markerClickEvent = {
         click: function (marker, eventName, args) {
 
-            var items = $filter('locationFilter')($scope.markers, {
+            var items = $filter('locationFilter')($scope.nodes, {
                 latitude: marker.getPosition().lat(),
                 longitude: marker.getPosition().lng()
             });
@@ -104,21 +110,20 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
     };
 
     $scope.deleteMarker = function () {
-        $scope.markers.splice($scope.markers.indexOf($scope.current), 1);
+        $scope.nodes.splice($scope.nodes.indexOf($scope.current), 1);
     };
 
     $scope.submitData = function () {
 
         var postData = { status: 0, message: "hello"};
-        $http.post('/app/hook', postData, {headers: {
+
+        $http.post('/app/hook', $scope.quest , {headers: {
                 'Content-Type': 'application/json',
                 'dataType': 'application/json',
                 'Accept': 'application/json, text/javascript'}}
         ).success(function (data, status, headers, config) {
-                alert("yes");
                 $log.log(data, status, headers, config);
             }).error(function (data, status, headers, config) {
-                alert("noo");
                 $log.log(data, status, headers, config);
             });
 
