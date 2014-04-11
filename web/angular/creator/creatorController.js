@@ -1,6 +1,6 @@
 app.controller("CreatorController", function ($scope, $filter, $log, $http) {
 
-    $scope.atomic = 0;
+    $scope.atomic = 1;
     $scope.getId = function () {
         $scope.atomic = $scope.atomic + 1;
         return $scope.atomic;
@@ -40,6 +40,7 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
         }
     };
 
+    /* quest model part */
     $scope.nodes = [
         {
             id: 0,
@@ -59,18 +60,23 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
         }
     ];
 
-    $scope.quest = {
-
-        id:123,
-        nodes: $scope.nodes
+    $scope.connections = {};
+    $scope.connections[0] = {
+        children: [],
+        parents: []
+    };
+    $scope.connections[1] = {
+        children: [],
+        parents: []
     };
 
-    $scope.links = [
-        {
-            from: 0,
-            to: 1
-        }
-    ];
+    $scope.quest = {
+
+        id: 123,
+        nodes: $scope.nodes,
+        connections: $scope.connections
+    };
+    // quest model end
 
     $scope.hidden = "false";
     $scope.current = {
@@ -82,7 +88,6 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
         }
     };
 
-
     $scope.addNew = function (lat, lon) {
         var node = {
             id: $scope.getId(),
@@ -93,31 +98,108 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
             }
         };
         $scope.current = node;
+        $scope.connections[node.id] = {
+            children: [],
+            parents: []
+        };
 
         $scope.nodes.push(node);
+    };
+
+    $scope.selected = 0;
+    $scope.lines = [];
+    $scope.begin = {
+        location: {
+            latitude: 42.641900799999990000,
+            longitude: 18.106484899999940000
+        },
+        marker: null
     };
 
     $scope.markerClickEvent = {
         click: function (marker, eventName, args) {
 
+            var previous = $scope.current;
             var items = $filter('locationFilter')($scope.nodes, {
                 latitude: marker.getPosition().lat(),
                 longitude: marker.getPosition().lng()
             });
             $scope.current = items[0];
+
+            if ($scope.selected == 0) {
+                $scope.begin.location = {
+                    latitude: marker.getPosition().lat(),
+                    longitude: marker.getPosition().lng()
+                };
+                $scope.selected = 1;
+                $scope.begin.marker = marker;
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+            }
+            else if ($scope.selected == 1) {
+
+
+
+                $scope.begin.marker.setAnimation(null);
+                $scope.selected = 0;
+
+                $scope.connections[previous.id].children.push($scope.current.id);
+                $scope.connections[$scope.current.id].parents.push(previous.id);
+
+                $scope.lines.push(
+                    [
+                        previous.questLocation,
+                        $scope.current.questLocation
+                    ]
+                );
+            }
+
             $scope.$apply();
         }
     };
 
     $scope.deleteMarker = function () {
+
+        if($scope.selected == 0){
+            return;
+        }
+
         $scope.nodes.splice($scope.nodes.indexOf($scope.current), 1);
+
+        $scope.connections[$scope.current.id].children.forEach(
+            function deleteParent(id) {
+                $scope.connections[id].parents.splice(
+                    $scope.connections[id].parents.indexOf($scope.current.id), 1);
+            });
+
+        $scope.connections[$scope.current.id].parents.forEach(
+            function deleteChild(id) {
+                $scope.connections[id].children.splice(
+                    $scope.connections[id].children.indexOf($scope.current.id), 1);
+            });
+
+        $scope.lines.forEach(
+            function deleteLine(line, index){
+                if( equals(line[0], $scope.current.questLocation) || equals(line[1], $scope.current.questLocation) ){
+                    $scope.lines.splice(index,1);
+                }
+            }
+        );
+
+        delete $scope.connections[$scope.current.id];
+        $scope.selected = 0;
+
+        $scope.$apply();
     };
+
+    function equals(A,B){
+        return A.latitude == B.latitude && A.longitude == B.longitude;
+    }
 
     $scope.submitData = function () {
 
         var postData = { status: 0, message: "hello"};
 
-        $http.post('/app/hook', $scope.quest , {headers: {
+        $http.post('/app/hook', $scope.quest, {headers: {
                 'Content-Type': 'application/json',
                 'dataType': 'application/json',
                 'Accept': 'application/json, text/javascript'}}
@@ -128,7 +210,6 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
             });
 
     }
-
 
 
 });

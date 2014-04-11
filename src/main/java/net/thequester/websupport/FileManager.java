@@ -30,7 +30,7 @@ public class FileManager {
     }
 
     public void save(Quest quest) throws ArchiverException {
-        File file = new File("C:\\Users\\Tomo\\questArchive\\" + quest.getId() + ".xml");
+        File file = new File("C:\\Users\\Tomo\\IdeaProjects\\QuesterWebSupport\\src\\" + quest.getId() + ".xml");
 
         try {
             JAXBContext jaxbContextMessage = JAXBContext.newInstance(Quest.class);

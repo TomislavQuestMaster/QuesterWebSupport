@@ -4,7 +4,7 @@ var app = angular.module('CreatorApp', ['google-maps']).filter('locationFilter',
 
         var arrayToReturn = [];
         for (var i=0; i<items.length; i++){
-            if (items[i].location.latitude == location.latitude && items[i].location.longitude == location.longitude) {
+            if (items[i].questLocation.latitude == location.latitude && items[i].questLocation.longitude == location.longitude) {
                 arrayToReturn.push(items[i]);
             }
         }
