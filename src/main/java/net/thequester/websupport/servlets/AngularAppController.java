@@ -43,20 +43,12 @@ public class AngularAppController {
         Quest quest = new FileManager().load("123");
         QuestProcessor processor = new QuestProcessor(quest);
 
-        int lastId = 0;
+        int lastId = quest.getNodes().get(0).getId();
         for(QuestLocation location : path){
             Node node = processor.processLocation(lastId, location);
             if(node != null){
                 lastId = node.getId();
             }
-        }
-
-
-        FileManager manager = new FileManager();
-        try {
-            manager.save(quest);
-        } catch (ArchiverException e) {
-            return new Response(0,e.getMessage());
         }
 
         return new Response(1,"Success");

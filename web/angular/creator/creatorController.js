@@ -17,11 +17,16 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
             weight: 2,
             opacity: 1
         },
-        fill: {
-            color: '#08B21F',
-            opacity: 0.5
-        }
+        draggable: false,
+        clickable: false
     };
+
+    /*
+     fill: {
+     color: '#08B21F',
+     opacity: 0.5
+     },
+     */
 
     $scope.map = {
         center: {
@@ -40,46 +45,12 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
         }
     };
 
-    $scope.path = [
-        {
-            latitude: 42.641900799999990000,
-            longitude: 18.106484899999940000
-        },
-        {
-            latitude: 42.64300799999990000,
-            longitude: 18.106484899999940000
-        }
-    ];
+    $scope.icon = 'icon.png';
+
+    $scope.path = [];
     /* quest model part */
-    $scope.nodes = [
-        {
-            id: 0,
-            radius: 50,
-            questLocation: {
-                latitude: 42.641900799999990000,
-                longitude: 18.106484899999940000
-            }
-        },
-        {
-            id: 1,
-            radius: 50,
-            questLocation: {
-                latitude: 42.64300799999990000,
-                longitude: 18.106484899999940000
-            }
-        }
-    ];
-
+    $scope.nodes = [];
     $scope.connections = {};
-    $scope.connections[0] = {
-        children: [],
-        parents: []
-    };
-    $scope.connections[1] = {
-        children: [],
-        parents: []
-    };
-
     $scope.quest = {
 
         id: 123,

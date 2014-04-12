@@ -26,12 +26,19 @@
 
             <marker ng-repeat="location in path"
                     coords="location"
-                    icon="icon.png"></marker>
+                    icon="icon"></marker>
 
             <polyline ng-repeat="line in lines" path="line"></polyline>
-            <!--
-            <circle ng-repeat="marker in markers" center="marker.location" radius="marker.radius" fill="circle.fill" stroke="circle.stroke"></circle>
-            -->
+
+            <circle ng-repeat="node in nodes"
+                    center="node.questLocation"
+                    radius="node.radius"
+                    fill="circle.fill"
+                    stroke="circle.stroke"
+                    draggable="circle.draggable"
+                    clickable="circle.clickable"
+                    ></circle>
+
         </google-map>
     </div>
     <div class="col-lg-4 col-md-4">
