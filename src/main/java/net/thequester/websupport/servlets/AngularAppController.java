@@ -1,10 +1,9 @@
 package net.thequester.websupport.servlets;
 
 import net.thequester.archiver.ArchiverException;
-import net.thequester.model.Node;
 import net.thequester.model.Quest;
 import net.thequester.model.QuestLocation;
-import net.thequester.processor.impl.QuestProcessor;
+import net.thequester.processor.impl.GameEngine;
 import net.thequester.websupport.FileManager;
 import net.thequester.websupport.model.Response;
 import org.springframework.stereotype.Controller;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Tomo.
@@ -22,9 +20,9 @@ import java.util.Map;
 @Controller
 public class AngularAppController {
 
-    @RequestMapping(value = "/app/hook", method = RequestMethod.POST)
+    @RequestMapping(value = "/app/save", method = RequestMethod.POST)
     public @ResponseBody
-    Response test(@RequestBody Quest quest) {
+    Response save(@RequestBody Quest quest) {
 
         FileManager manager = new FileManager();
         try {
@@ -38,20 +36,24 @@ public class AngularAppController {
 
     @RequestMapping(value = "/app/test", method = RequestMethod.POST)
     public @ResponseBody
-    Response run(@RequestBody List<QuestLocation> path) throws ArchiverException {
+    List<Integer> runTest(@RequestBody List<QuestLocation> path) throws ArchiverException {
 
         Quest quest = new FileManager().load("123");
-        QuestProcessor processor = new QuestProcessor(quest);
+        GameEngine engine = new GameEngine();
 
-        int lastId = quest.getNodes().get(0).getId();
+        engine.startQuest(quest);
         for(QuestLocation location : path){
-            Node node = processor.processLocation(lastId, location);
-            if(node != null){
-                lastId = node.getId();
-            }
+            engine.processLocation(location);
         }
 
-        return new Response(1,"Success");
+        return engine.getGamePath();
+    }
+
+    @RequestMapping(value = "/app/load", method = RequestMethod.GET)
+    public @ResponseBody
+    Quest load() throws ArchiverException {
+
+        return new FileManager().load("123");
     }
 
 }

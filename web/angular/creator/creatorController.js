@@ -1,24 +1,20 @@
 app.controller("CreatorController", function ($scope, $filter, $log, $http) {
 
-    $scope.atomic = 1;
+    $scope.atomic = 0;
     $scope.getId = function () {
         $scope.atomic = $scope.atomic + 1;
         return $scope.atomic;
     };
 
     $scope.circle = {
-        center: {
-            latitude: 42.641900799999990000,
-            longitude: 18.106484899999940000
-        },
-        radius: 50,
         stroke: {
             color: '#08B21F',
             weight: 2,
             opacity: 1
         },
         draggable: false,
-        clickable: false
+        clickable: false,
+        editable: true
     };
 
     /*
@@ -29,6 +25,7 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
      */
 
     $scope.map = {
+        control: {},
         center: {
             latitude: 42.641900799999990000,
             longitude: 18.106484899999940000
@@ -42,7 +39,8 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
                 $scope.addNew(e.latLng.lat(), e.latLng.lng());
                 $scope.$apply();
             }
-        }
+        },
+        lines: []
     };
 
     $scope.icon = 'icon.png';
@@ -51,12 +49,6 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
     /* quest model part */
     $scope.nodes = [];
     $scope.connections = {};
-    $scope.quest = {
-
-        id: 123,
-        nodes: $scope.nodes,
-        connections: $scope.connections
-    };
     // quest model end
 
     $scope.hidden = "false";
@@ -71,7 +63,7 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
 
     $scope.addNew = function (lat, lon) {
 
-        if($scope.markerType == "test"){
+        if ($scope.markerType == "test") {
             $scope.path.push({
                 latitude: lat,
                 longitude: lon
@@ -81,7 +73,7 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
 
         var node = {
             id: $scope.getId(),
-            radius: 50,
+            radius: parseInt($scope.radius),
             questLocation: {
                 latitude: lat,
                 longitude: lon
@@ -97,7 +89,6 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
     };
 
     $scope.selected = 0;
-    $scope.lines = [];
     $scope.begin = {
         location: {
             latitude: 42.641900799999990000,
@@ -134,11 +125,13 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
                 $scope.connections[previous.id].children.push($scope.current.id);
                 $scope.connections[$scope.current.id].parents.push(previous.id);
 
-                $scope.lines.push(
-                    [
-                        previous.questLocation,
-                        $scope.current.questLocation
-                    ]
+                $scope.map.lines.push(
+                    {
+                        points: [
+                            previous.questLocation,
+                            $scope.current.questLocation
+                        ]
+                    }
                 );
             }
 
@@ -166,18 +159,22 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
                     $scope.connections[id].children.indexOf($scope.current.id), 1);
             });
 
-        $scope.lines.forEach(
-            function deleteLine(line, index) {
-                if (equals(line[0], $scope.current.questLocation) || equals(line[1], $scope.current.questLocation)) {
-                    $scope.lines.splice(index, 1);
+        var deleteLines = [];
+
+        $scope.map.lines.forEach(
+            function deleteLineIndexes(line, index) {
+                if (equals(line.points[0], $scope.current.questLocation) || equals(line.points[1], $scope.current.questLocation)) {
+                    deleteLines.push(index);
                 }
             }
         );
+        deleteLines.sort();
+        for (var i = deleteLines.length - 1; i >= 0; i--) {
+            $scope.map.lines.splice(deleteLines[i], 1);
+        }
 
         delete $scope.connections[$scope.current.id];
         $scope.selected = 0;
-
-        $scope.$apply();
     };
 
     function equals(A, B) {
@@ -186,7 +183,14 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
 
     $scope.submitData = function () {
 
-        $http.post('/app/hook', $scope.quest, {headers: {
+
+        var quest = {
+            id: 123,
+            nodes: $scope.nodes,
+            connections: $scope.connections
+        };
+
+        $http.post('/app/save', quest, {headers: {
                 'Content-Type': 'application/json',
                 'dataType': 'application/json',
                 'Accept': 'application/json, text/javascript'}}
@@ -196,7 +200,7 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
                 $log.log(data, status, headers, config);
             });
 
-    }
+    };
 
     $scope.runTest = function () {
 
@@ -210,15 +214,79 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
                 $log.log(data, status, headers, config);
             });
 
-    }
+    };
+
+    $scope.load = function () {
+
+        $http.get('/app/load', {headers: {
+                'Content-Type': 'application/json',
+                'dataType': 'application/json',
+                'Accept': 'application/json, text/javascript'}}
+        ).success(function (data, status, headers, config) {
+                $log.log(data, status, headers, config);
+
+                $scope.connections = data.connections;
+                $scope.nodes = data.nodes;
+
+                $scope.nodes.forEach(
+                    function loadLines(node) {
+
+                        $scope.connections[node.id].children.forEach(
+                            function lineToChild(childId) {
+
+                                var child = null;
+                                $scope.nodes.forEach(
+                                    function getById(node){
+                                        if(node.id == childId){
+                                            child = node;
+                                        }
+                                    }
+                                );
+
+                                $scope.map.lines.push({
+                                    visible: true,
+                                    points:[
+                                        node.questLocation,
+                                        child.questLocation
+                                    ]
+                                });
+                            });
+
+                        $scope.connections[node.id].parents.forEach(
+                            function lineToParent(parentId) {
+
+                                var parent = null;
+                                $scope.nodes.forEach(
+                                    function getById(node){
+                                        if(node.id == parentId){
+                                            parent = node;
+                                        }
+                                    }
+                                );
+
+                                $scope.map.lines.push({
+                                    visible: true,
+                                    points:[
+                                        node.questLocation,
+                                        parent.questLocation
+                                    ]
+                                });
+                            });
+
+                    });
+
+            }).error(function (data, status, headers, config) {
+                $log.log(data, status, headers, config);
+            });
+    };
 
     $scope.markerType = "quest";
     $scope.switchMarkers = function () {
 
-        if($scope.markerType == "quest"){
+        if ($scope.markerType == "quest") {
             $scope.markerType = "test";
         }
-        else if($scope.markerType == "test"){
+        else if ($scope.markerType == "test") {
             $scope.markerType = "quest";
         }
     }
