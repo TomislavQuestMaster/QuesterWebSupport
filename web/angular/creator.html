@@ -24,6 +24,10 @@
 
             <marker ng-repeat="node in nodes" coords="node.questLocation" events="markerClickEvent"></marker>
 
+            <marker ng-repeat="location in path"
+                    coords="location"
+                    icon="icon.png"></marker>
+
             <polyline ng-repeat="line in lines" path="line"></polyline>
             <!--
             <circle ng-repeat="marker in markers" center="marker.location" radius="marker.radius" fill="circle.fill" stroke="circle.stroke"></circle>
@@ -51,6 +55,8 @@
             </fieldset>
             <button type="button" class="btn" ng-click="deleteMarker()">Delete</button>
             <button type="button" class="btn" ng-click="submitData()">Submit</button>
+            <button type="button" class="btn" ng-click="switchMarkers()">SwitchMarkers</button>
+            <button type="button" class="btn" ng-click="runTest()">Test</button>
         </form>
     </div>
 </div>

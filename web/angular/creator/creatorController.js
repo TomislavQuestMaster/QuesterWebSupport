@@ -40,6 +40,16 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
         }
     };
 
+    $scope.path = [
+        {
+            latitude: 42.641900799999990000,
+            longitude: 18.106484899999940000
+        },
+        {
+            latitude: 42.64300799999990000,
+            longitude: 18.106484899999940000
+        }
+    ];
     /* quest model part */
     $scope.nodes = [
         {
@@ -89,6 +99,15 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
     };
 
     $scope.addNew = function (lat, lon) {
+
+        if($scope.markerType == "test"){
+            $scope.path.push({
+                latitude: lat,
+                longitude: lon
+            });
+            return;
+        }
+
         var node = {
             id: $scope.getId(),
             radius: 50,
@@ -138,7 +157,6 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
             else if ($scope.selected == 1) {
 
 
-
                 $scope.begin.marker.setAnimation(null);
                 $scope.selected = 0;
 
@@ -159,7 +177,7 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
 
     $scope.deleteMarker = function () {
 
-        if($scope.selected == 0){
+        if ($scope.selected == 0) {
             return;
         }
 
@@ -178,9 +196,9 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
             });
 
         $scope.lines.forEach(
-            function deleteLine(line, index){
-                if( equals(line[0], $scope.current.questLocation) || equals(line[1], $scope.current.questLocation) ){
-                    $scope.lines.splice(index,1);
+            function deleteLine(line, index) {
+                if (equals(line[0], $scope.current.questLocation) || equals(line[1], $scope.current.questLocation)) {
+                    $scope.lines.splice(index, 1);
                 }
             }
         );
@@ -191,13 +209,11 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
         $scope.$apply();
     };
 
-    function equals(A,B){
+    function equals(A, B) {
         return A.latitude == B.latitude && A.longitude == B.longitude;
     }
 
     $scope.submitData = function () {
-
-        var postData = { status: 0, message: "hello"};
 
         $http.post('/app/hook', $scope.quest, {headers: {
                 'Content-Type': 'application/json',
@@ -209,6 +225,31 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
                 $log.log(data, status, headers, config);
             });
 
+    }
+
+    $scope.runTest = function () {
+
+        $http.post('/app/test', $scope.path, {headers: {
+                'Content-Type': 'application/json',
+                'dataType': 'application/json',
+                'Accept': 'application/json, text/javascript'}}
+        ).success(function (data, status, headers, config) {
+                $log.log(data, status, headers, config);
+            }).error(function (data, status, headers, config) {
+                $log.log(data, status, headers, config);
+            });
+
+    }
+
+    $scope.markerType = "quest";
+    $scope.switchMarkers = function () {
+
+        if($scope.markerType == "quest"){
+            $scope.markerType = "test";
+        }
+        else if($scope.markerType == "test"){
+            $scope.markerType = "quest";
+        }
     }
 
 

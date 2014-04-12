@@ -10,6 +10,7 @@ import net.thequester.websupport.serializator.JsonSerializer;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import java.io.File;
 
 /**
@@ -40,4 +41,18 @@ public class FileManager {
             throw new ArchiverException("Failed to save quest progress: " +  e.getMessage());
         }
     }
+
+    public Quest load(String name) throws ArchiverException {
+        File file = new File("C:\\Users\\Tomo\\IdeaProjects\\QuesterWebSupport\\src\\" + name + ".xml");
+
+        try {
+            JAXBContext context = JAXBContext.newInstance(Quest.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            return (Quest) unmarshaller.unmarshal(file);
+
+        } catch (JAXBException e) {
+            throw new ArchiverException("Failed to load quest: " + e.getMessage());
+        }
+    }
+
 }
