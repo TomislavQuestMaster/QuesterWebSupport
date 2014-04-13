@@ -49,6 +49,7 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
     /* quest model part */
     $scope.nodes = [];
     $scope.connections = {};
+    $scope.events = {};
     // quest model end
 
     $scope.hidden = "false";
@@ -73,7 +74,7 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
 
         var node = {
             id: $scope.getId(),
-            radius: parseInt($scope.radius),
+            radius: $scope.radius,
             questLocation: {
                 latitude: lat,
                 longitude: lon
@@ -107,6 +108,13 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
             });
             $scope.current = items[0];
 
+            if($scope.eventFormHidden == false){
+                $scope.event.causes[$scope.current.id] = 1;
+                $scope.begin.marker.setAnimation(null);
+                $scope.$apply();
+                return;
+            }
+
             if ($scope.selected == 0) {
                 $scope.begin.location = {
                     latitude: marker.getPosition().lat(),
@@ -121,6 +129,11 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
 
                 $scope.begin.marker.setAnimation(null);
                 $scope.selected = 0;
+
+                if(previous.id == $scope.current.id){
+                    $scope.$apply();
+                    return;
+                }
 
                 $scope.connections[previous.id].children.push($scope.current.id);
                 $scope.connections[$scope.current.id].parents.push(previous.id);
@@ -187,7 +200,8 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
         var quest = {
             id: 123,
             nodes: $scope.nodes,
-            connections: $scope.connections
+            connections: $scope.connections,
+            events: $scope.events
         };
 
         $http.post('/app/save', quest, {headers: {
@@ -227,6 +241,7 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
 
                 $scope.connections = data.connections;
                 $scope.nodes = data.nodes;
+                $scope.events = data.events;
 
                 $scope.nodes.forEach(
                     function loadLines(node) {
@@ -291,6 +306,24 @@ app.controller("CreatorController", function ($scope, $filter, $log, $http) {
         }
     }
 
+
+    $scope.addEvent = function(){
+        if($scope.selected == 0){
+            return;
+        }
+        $scope.eventFormHidden = false;
+        $scope.events[$scope.current.id]=$scope.event;
+        $scope.selected = 0;
+    };
+
+    $scope.eventFormHidden = true;
+    $scope.event = {
+        causes: {}
+    };
+
+    $scope.finishEvent= function(){
+        $scope.eventFormHidden = true;
+    };
 
 });
 

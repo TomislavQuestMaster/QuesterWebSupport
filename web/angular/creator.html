@@ -70,6 +70,13 @@
             <button type="button" class="btn" ng-click="switchMarkers()">Switch</button>
             <button type="button" class="btn" ng-click="runTest()">Test</button>
             <button type="button" class="btn" ng-click="load()">Load</button>
+            <button type="button" class="btn" ng-click="addEvent()">AddEvent</button>
+        </form>
+        <form ng-hide="eventFormHidden">
+            <div ng-repeat="(key, value) in event.causes">
+                {{key}}<input type="number" ng-model="value">
+            </div>
+            <button type="button" class="btn" ng-click="finishEvent()">Finish</button>
         </form>
     </div>
 </div>
