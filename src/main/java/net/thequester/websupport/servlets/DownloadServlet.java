@@ -21,6 +21,7 @@ public class DownloadServlet extends HttpServlet {
 	private final JsonSerializer serializer = new JsonSerializer();
 	private final FileManager manager = new FileManager();
 
+    //TODO transfer to MVC like in HCV
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String body = Utilities.getBody(request);

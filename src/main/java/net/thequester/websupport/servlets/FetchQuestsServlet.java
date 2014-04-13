@@ -17,6 +17,7 @@ import java.io.IOException;
  */
 public class FetchQuestsServlet extends HttpServlet {
 
+    //TODO transfer to MVC
 	private final JsonSerializer serializer = new JsonSerializer();
 
 	private QuestService service;
