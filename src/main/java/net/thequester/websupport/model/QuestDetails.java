@@ -4,6 +4,8 @@ package net.thequester.websupport.model;
  * Created by Tomo.
  */
 
+import net.thequester.model.Quest;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -109,5 +111,24 @@ public class QuestDetails {
 	public void setOwner(String owner) {
 
 		this.owner = owner;
+	}
+
+	public static class Builder{
+
+		private QuestDetails details;
+
+		public Builder() {
+			 details = new QuestDetails();
+		}
+
+		public Builder at(Double lat, Double lon){
+			details.setLatitude(lat);
+			details.setLongitude(lon);
+			return this;
+		}
+
+		public QuestDetails build(){
+			return details;
+		}
 	}
 }
