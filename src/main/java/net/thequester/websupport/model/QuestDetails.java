@@ -121,6 +121,11 @@ public class QuestDetails {
 			 details = new QuestDetails();
 		}
 
+		public Builder named(String name){
+			details.setQuestName(name);
+			return this;
+		}
+
 		public Builder at(Double lat, Double lon){
 			details.setLatitude(lat);
 			details.setLongitude(lon);

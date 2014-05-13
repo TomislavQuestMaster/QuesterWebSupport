@@ -23,11 +23,6 @@ public class QuestService {
 		return repository.save(quest);
 	}
 
-	public Iterable<QuestDetails> getQuests() {
-
-		return repository.findAll();
-	}
-
 	public Iterable<QuestDetails> getNearbyQuests(Filter filter) {
 
 		return repository.findAll(acos(sin(questDetails.latitude).multiply(Math.sin(filter.getLatitude()))

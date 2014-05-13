@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static java.lang.Math.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author tdubravcevic
@@ -33,18 +34,15 @@ public class DatabaseTest {
 
 
 	@Test
-	public void test(){
+	public void happyPath(){
 
-		service.create(new QuestDetails.Builder().at(0.0,0.0).build());
-		service.create(new QuestDetails.Builder().at(1.0,1.0).build());
+		service.create(new QuestDetails.Builder().named("A").at(0.0, 0.0).build());
+		service.create(new QuestDetails.Builder().named("B").at(1.0, 1.0).build());
 
 		Iterable<QuestDetails> filtered = service.getNearbyQuests(new Filter(0.0,0.0,8122744));
 
-		System.out.println( acos(sin(1.0)*sin(0.0)+cos(1.0)*cos(0.0)*cos(1.0))*6373000);
-
 		for(QuestDetails details : filtered){
-			System.out.println(details.getLatitude());
-			System.out.println(details.getLongitude());
+			assertEquals("A", details.getQuestName());
 		}
 	}
 
