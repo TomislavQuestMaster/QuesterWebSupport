@@ -1,5 +1,8 @@
 package net.thequester.websupport.spring;
 
+import net.thequester.websupport.database.repositories.QuestRepository;
+import net.thequester.websupport.database.repositories.QuestService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.JstlView;
@@ -11,6 +14,14 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 @PropertySource("classpath:application.properties")
 @Import(DatabaseConfig.class)
 public class WebAppConfig {
+
+	@Autowired
+	private QuestRepository repository;
+
+	@Bean
+	public QuestService questService(){
+		return new QuestService(repository);
+	}
 
     @Bean
     public UrlBasedViewResolver setupViewResolver() {
