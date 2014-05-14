@@ -14,10 +14,5 @@ import java.io.IOException;
 @Import(DatabaseConfig.class)
 @PropertySource("classpath:test/systemTest.properties")
 public class SystemTestConfiguration {
-
-	public SystemTestConfiguration() throws IOException {
-
-		//System.getProperties().load(getClass().getResourceAsStream("systemTest.properties"));
-	}
 }
 

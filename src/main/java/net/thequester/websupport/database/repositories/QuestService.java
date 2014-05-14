@@ -25,5 +25,4 @@ public class QuestService {
 		return repository.findAll(FilterExpressionCreator.createExpression(filter));
 	}
 
-
 }

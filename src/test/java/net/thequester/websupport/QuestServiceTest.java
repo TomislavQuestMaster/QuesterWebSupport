@@ -1,6 +1,5 @@
 package net.thequester.websupport;
 
-import net.thequester.websupport.database.repositories.FilterExpressionCreator;
 import net.thequester.websupport.database.repositories.QuestRepository;
 import net.thequester.websupport.database.repositories.QuestService;
 import net.thequester.websupport.model.Filter;

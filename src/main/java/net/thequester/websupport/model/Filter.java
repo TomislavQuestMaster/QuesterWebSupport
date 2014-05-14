@@ -5,46 +5,54 @@ package net.thequester.websupport.model;
  */
 public class Filter {
 
-    private Double latitude;
-    private Double longitude;
-    private Double radius;
+	private Double latitude;
+	private Double longitude;
+	private Double radius;
 
 	private String name;
 	private String description;
 	private String owner;
 
-    public Filter() {
-    }
+	public Filter() {
 
-    public Filter(double latitude, double longitude, double radius) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.radius = radius;
-    }
+	}
 
-    public Double getLatitude() {
-        return latitude;
-    }
+	public Filter(double latitude, double longitude, double radius) {
 
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.radius = radius;
+	}
 
-    public Double getLongitude() {
-        return longitude;
-    }
+	public Double getLatitude() {
 
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
+		return latitude;
+	}
 
-    public Double getRadius() {
-        return radius;
-    }
+	public void setLatitude(Double latitude) {
 
-    public void setRadius(Double radius) {
-        this.radius = radius;
-    }
+		this.latitude = latitude;
+	}
+
+	public Double getLongitude() {
+
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+
+		this.longitude = longitude;
+	}
+
+	public Double getRadius() {
+
+		return radius;
+	}
+
+	public void setRadius(Double radius) {
+
+		this.radius = radius;
+	}
 
 	public String getName() {
 
