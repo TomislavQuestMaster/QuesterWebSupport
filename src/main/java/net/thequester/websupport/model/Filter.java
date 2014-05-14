@@ -5,9 +5,13 @@ package net.thequester.websupport.model;
  */
 public class Filter {
 
-    private double latitude;
-    private double longitude;
-    private double radius;
+    private Double latitude;
+    private Double longitude;
+    private Double radius;
+
+	private String name;
+	private String description;
+	private String owner;
 
     public Filter() {
     }
@@ -18,27 +22,57 @@ public class Filter {
         this.radius = radius;
     }
 
-    public double getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
-    public double getRadius() {
+    public Double getRadius() {
         return radius;
     }
 
-    public void setRadius(double radius) {
+    public void setRadius(Double radius) {
         this.radius = radius;
     }
+
+	public String getName() {
+
+		return name;
+	}
+
+	public void setName(String name) {
+
+		this.name = name;
+	}
+
+	public String getDescription() {
+
+		return description;
+	}
+
+	public void setDescription(String description) {
+
+		this.description = description;
+	}
+
+	public String getOwner() {
+
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+
+		this.owner = owner;
+	}
 }

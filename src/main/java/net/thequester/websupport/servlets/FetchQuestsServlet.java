@@ -27,7 +27,7 @@ public class FetchQuestsServlet extends HttpServlet {
 		String body = Utilities.getBody(request);
 		Filter filter = (Filter) serializer.deserialize(body, Filter.class);
 
-		Iterable<QuestDetails> quests = service.getNearbyQuests(filter);
+		Iterable<QuestDetails> quests = service.filterQuests(filter);
 
 		response.getWriter().print(serializer.serialize(quests));
 	}
