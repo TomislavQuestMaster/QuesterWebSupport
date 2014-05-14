@@ -38,4 +38,10 @@ public class FetchQuestsServlet extends HttpServlet {
 		return Lists.newArrayList(service.filterQuests(filter));
 	}
 
+	@RequestMapping(value = "/saveDetails", method = RequestMethod.POST)
+	public void save(@RequestBody QuestDetails quest) {
+
+		service.save(quest);
+	}
+
 }
