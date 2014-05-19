@@ -4,6 +4,7 @@ import net.thequester.websupport.database.repositories.QuestRepository;
 import net.thequester.websupport.database.repositories.QuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
+import org.springframework.security.access.SecurityConfig;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
@@ -12,7 +13,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 @ComponentScan("net.thequester.websupport")
 @EnableWebMvc
 @PropertySource("classpath:application.properties")
-@Import(DatabaseConfig.class)
+@Import({DatabaseConfig.class, SecurityConfiguration.class})
 public class WebAppConfig {
 
 	@Autowired
