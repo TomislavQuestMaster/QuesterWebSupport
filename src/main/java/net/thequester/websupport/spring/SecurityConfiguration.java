@@ -17,22 +17,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
-		auth.inMemoryAuthentication().withUser("tom").password("123456").roles("USER");
-		auth.inMemoryAuthentication().withUser("bill").password("123456").roles("ADMIN");
-		auth.inMemoryAuthentication().withUser("james").password("123456").roles("SUPERADMIN");
+		auth.inMemoryAuthentication().withUser("tomo").password("284790").roles("ADMIN");
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.csrf().disable();
-
-		http.formLogin()
-			.and()
-			.authorizeRequests().antMatchers("/*").permitAll();
-			//.antMatchers("/app/**")
+		http.formLogin().and()
+			.authorizeRequests().antMatchers("/*")
+			.permitAll();
 			//.access("hasRole('ROLE_ADMIN')");
-
 	}
 
 }
