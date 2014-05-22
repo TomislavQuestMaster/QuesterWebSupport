@@ -9,6 +9,49 @@
         <welcome-file>angular/creator.html</welcome-file>
     </welcome-file-list>
 
+
+	<!-- Java-based Spring container definition -->
+	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+	</context-param>
+
+	<!-- Location of Java @Configuration classes that configure the components that makeup this application -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>net.thequester.websupport.spring.WebAppConfig</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+
+	<!-- use the springSecurityFilterChain -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<!-- NOTE This does not specify its own configuration it is
+			 loaded by the ContextLoaderListener instead -->
+
+		<!-- NOTE by default the filter name is used to
+			 look up the Spring Security Filter Chain if you like you
+			 can use any filter name you want, but you must specify
+			 the bean name instead in this instance. Since we use the
+			 springSecurityFilterChain as the filter name this is not
+			 necessary
+		<init-param>
+			<param-name>targetBeanName</param-name>
+			<param-value>springSecurityFilterChain</param-value>
+		</init-param> -->
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!--
     <servlet>
         <servlet-name>single</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -34,6 +77,7 @@
         <servlet-name>single</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+	-->
 
     <servlet-mapping>
         <servlet-name>default</servlet-name>
@@ -42,4 +86,5 @@
         <url-pattern>*.css</url-pattern>
         <url-pattern>*.png</url-pattern>
     </servlet-mapping>
+
 </web-app>
