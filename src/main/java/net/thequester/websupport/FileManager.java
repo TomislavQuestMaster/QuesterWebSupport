@@ -1,11 +1,9 @@
 package net.thequester.websupport;
 
 import net.thequester.archiver.ArchiverException;
-import net.thequester.model.Game;
 import net.thequester.model.Quest;
 import net.thequester.websupport.model.QuestDetails;
 import net.thequester.websupport.model.User;
-import net.thequester.websupport.serializator.JsonSerializer;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -17,6 +15,8 @@ import java.io.File;
  * @author tdubravcevic
  */
 public class FileManager {
+
+	//TODO make better extract interface
 
 	public boolean createNewUser(User user){
 

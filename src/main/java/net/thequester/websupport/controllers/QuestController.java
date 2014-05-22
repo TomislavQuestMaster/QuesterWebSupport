@@ -1,4 +1,4 @@
-package net.thequester.websupport.servlets;
+package net.thequester.websupport.controllers;
 
 import com.google.common.collect.Lists;
 import net.thequester.websupport.database.repositories.QuestService;
@@ -19,7 +19,7 @@ import java.util.List;
  * @author tdubravcevic
  */
 @Controller
-public class FetchQuestsServlet extends HttpServlet {
+public class QuestController extends HttpServlet {
 
 	@Autowired
 	private QuestService service;
@@ -27,7 +27,7 @@ public class FetchQuestsServlet extends HttpServlet {
 	@RequestMapping(value = "/filter", method = RequestMethod.POST)
 	public
 	@ResponseBody
-	List<QuestDetails> save(@RequestBody Filter filter) {
+	List<QuestDetails> filterQuests(@RequestBody Filter filter) {
 
 		return Lists.newArrayList(service.filterQuests(filter));
 	}
@@ -52,7 +52,7 @@ public class FetchQuestsServlet extends HttpServlet {
 
 				File dir = new File("C:\\Users\\tdubravcevic\\Downloads");
 
-				//TODO trasfer to some file manager
+				//TODO transfer to file manager
 				File serverFile = new File(dir.getAbsolutePath() + File.separator + name);
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes);
@@ -68,18 +68,18 @@ public class FetchQuestsServlet extends HttpServlet {
 		}
 	}
 
-	@RequestMapping(value = "/getFile", method = RequestMethod.GET)
-	public void getFile(HttpServletResponse response) {
+	@RequestMapping(value = "/getFile/{name}", method = RequestMethod.GET)
+	public void getFile(@PathVariable("name") String fileName, HttpServletResponse response) {
 
-		//TODo file manager should serve the file
-		File file = new File("C:\\Users\\tdubravcevic\\Downloads\\bla.jpg");
+		//TODO file manager should serve the file
+		File file = new File("C:\\Users\\tdubravcevic\\Downloads\\" + fileName + ".jpg");
 
 		try {
 			InputStream is = new FileInputStream(file);
 			IOUtils.copy(is, response.getOutputStream());
 			response.flushBuffer();
 		} catch (IOException ex) {
-			throw new RuntimeException("IOError writing file to output stream");
+			throw new RuntimeException("IOError writing file to output stream", ex);
 		}
 
 	}

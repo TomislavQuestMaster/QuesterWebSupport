@@ -11,7 +11,7 @@
     <input type="submit" value="Upload"> Press here to upload the file!
 </form>
 
-<img src="http://localhost:9080/getFile" alt="some_text">
+<img src="http://localhost:9080/getFile/bla.jpg" alt="some_text">
 
 </body>
 </html>
