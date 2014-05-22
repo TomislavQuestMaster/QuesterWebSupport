@@ -4,7 +4,8 @@ import net.thequester.websupport.database.repositories.QuestRepository;
 import net.thequester.websupport.database.repositories.QuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
-import org.springframework.security.access.SecurityConfig;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
@@ -32,5 +33,12 @@ public class WebAppConfig {
         resolver.setViewClass(JstlView.class);
         return resolver;
     }
+
+	@Bean
+	public MultipartResolver multipartResolver() {
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+		resolver.setMaxUploadSize(100000);
+		return resolver;
+	}
 
 }

@@ -1,35 +1,17 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" %>
 <html>
 <head>
-    <style>
-        .error {
-            color: #ff0000;
-        }
-
-        .errorblock {
-            color: #000;
-            background-color: #ffEEEE;
-            border: 3px solid #ff0000;
-            padding: 8px;
-            margin: 16px;
-        }
-    </style>
+    <title>Upload File Request Page</title>
 </head>
-
 <body>
-<h2>Spring MVC file upload example</h2>
 
-<form:form method="POST" commandName="fileUploadForm"
-           enctype="multipart/form-data">
+<form method="POST" action="uploadFile" enctype="multipart/form-data">
+    File to upload: <input type="file" name="file"><br />
+    <input type="submit" value="Upload"> Press here to upload the file!
+</form>
 
-    <form:errors path="*" cssClass="errorblock" element="div" />
-
-    Please select a file to upload : <input type="file" name="file" />
-    <input type="submit" value="upload" />
-		<span><form:errors path="file" cssClass="error" />
-		</span>
-
-</form:form>
+<img src="http://localhost:9080/getFile" alt="some_text">
 
 </body>
 </html>
