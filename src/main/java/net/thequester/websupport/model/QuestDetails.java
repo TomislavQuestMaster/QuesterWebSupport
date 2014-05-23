@@ -1,16 +1,13 @@
 package net.thequester.websupport.model;
 
-/**
- * Created by Tomo.
- */
-
-import net.thequester.model.Quest;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Created by Tomo.
+ */
 @Entity
 @Table(name="quests")
 public class QuestDetails {

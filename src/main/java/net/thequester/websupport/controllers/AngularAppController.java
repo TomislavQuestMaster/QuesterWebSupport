@@ -1,12 +1,12 @@
 package net.thequester.websupport.controllers;
 
-import net.thequester.archiver.ArchiverException;
 import net.thequester.model.Quest;
 import net.thequester.model.QuestLocation;
 import net.thequester.processor.impl.EventProcessor;
 import net.thequester.processor.impl.GameEngine;
 import net.thequester.processor.impl.QuestProcessor;
 import net.thequester.websupport.FileManager;
+import net.thequester.websupport.model.ArchiverException;
 import net.thequester.websupport.model.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

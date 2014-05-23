@@ -1,7 +1,7 @@
 package net.thequester.websupport;
 
-import net.thequester.archiver.ArchiverException;
 import net.thequester.model.Quest;
+import net.thequester.websupport.model.ArchiverException;
 import net.thequester.websupport.model.QuestDetails;
 import net.thequester.websupport.model.User;
 
