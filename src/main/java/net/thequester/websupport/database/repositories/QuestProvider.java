@@ -6,11 +6,11 @@ import net.thequester.websupport.model.QuestDetails;
 /**
  * Created by Tomo.
  */
-public class QuestService {
+public class QuestProvider {
 
 	private QuestRepository repository;
 
-	public QuestService(QuestRepository repository) {
+	public QuestProvider(QuestRepository repository) {
 
 		this.repository = repository;
 	}

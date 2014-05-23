@@ -1,7 +1,7 @@
 package net.thequester.websupport.spring;
 
+import net.thequester.websupport.database.repositories.QuestProvider;
 import net.thequester.websupport.database.repositories.QuestRepository;
-import net.thequester.websupport.database.repositories.QuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.web.multipart.MultipartResolver;
@@ -21,8 +21,8 @@ public class WebAppConfig {
 	private QuestRepository repository;
 
 	@Bean
-	public QuestService questService(){
-		return new QuestService(repository);
+	public QuestProvider questProvider(){
+		return new QuestProvider(repository);
 	}
 
     @Bean

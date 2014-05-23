@@ -1,7 +1,7 @@
 package net.thequester.websupport;
 
+import net.thequester.websupport.database.repositories.QuestProvider;
 import net.thequester.websupport.database.repositories.QuestRepository;
-import net.thequester.websupport.database.repositories.QuestService;
 import net.thequester.websupport.model.Filter;
 import net.thequester.websupport.model.QuestDetails;
 import org.junit.Before;
@@ -18,17 +18,17 @@ import static org.junit.Assert.assertEquals;
  */
 @ContextConfiguration(classes = SystemTestConfiguration.class)
 @RunWith(SpringJUnit4ClassRunner.class)
-public class QuestServiceTest {
+public class QuestProviderTest {
 
 	@Autowired
 	QuestRepository repository;
 
-	private QuestService service;
+	private QuestProvider service;
 
 	@Before
 	public void setUp() {
 
-		service = new QuestService(repository);
+		service = new QuestProvider(repository);
 	}
 
 	@Test
