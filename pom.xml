@@ -57,7 +57,13 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
-        <!-- Apache -->
+        <!-- Apache
+        <dependency>
+            <groupId>net.sourceforge.jtds</groupId>
+            <artifactId>jdts-driver</artifactId>
+            <version>${jdts.driver.version}</version>
+        </dependency>
+        -->
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
@@ -130,11 +136,6 @@
 		    <artifactId>mysql-connector-java</artifactId>
 		    <version>${mysql.connector.java.version}</version>
 	    </dependency>
-        <dependency>
-            <groupId>net.sourceforge.jtds</groupId>
-            <artifactId>jdts-driver</artifactId>
-            <version>${jdts.driver.version}</version>
-        </dependency>
 
 	    <dependency>
 		    <groupId>org.apache.tomcat</groupId>

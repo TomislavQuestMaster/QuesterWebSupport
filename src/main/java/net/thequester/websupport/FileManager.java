@@ -14,15 +14,15 @@ import java.io.File;
 /**
  * @author tdubravcevic
  */
-public class FileManager {
+public class FileManager implements IFileManager {
 
 	//TODO make better extract interface
 
-	public boolean createNewUser(User user){
+    @Override
+	public boolean createUserDirectory(User user){
 
 		File dir = new File("web/quests/" + user.getUsername());
 		return dir.mkdir();
-
 	}
 
     public String getQuestLocation(QuestDetails quest){

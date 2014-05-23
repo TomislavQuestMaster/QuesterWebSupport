@@ -17,7 +17,7 @@ public class FileManagerTest {
 	public void createQuestsLocationTest(){
 
 		User user = new User("tomo", "", "");
-		manager.createNewUser(user);
+		manager.createUserDirectory(user);
 	}
 
     @Test
