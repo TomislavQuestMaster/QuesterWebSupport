@@ -24,26 +24,6 @@ public class QuestDetails {
     private String url;
 	private String owner;
 
-    public QuestDetails() {
-    }
-
-    public QuestDetails(Long id,
-						String questName,
-						String description,
-						double latitude,
-						double longitude,
-						QuestType questType,
-						String url,
-						String owner) {
-        this.questName = questName;
-        this.description = description;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.questType = questType;
-        this.url = url;
-		this.owner = owner;
-	}
-
     public Long getId() {
         return id;
     }
