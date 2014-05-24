@@ -1,6 +1,6 @@
 package net.thequester.websupport.spring;
 
-import net.thequester.websupport.database.repositories.QuestProvider;
+import net.thequester.websupport.database.providers.QuestProvider;
 import net.thequester.websupport.database.repositories.QuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;

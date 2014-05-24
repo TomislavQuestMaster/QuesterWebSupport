@@ -1,10 +1,8 @@
-package net.thequester.websupport.database.repositories;
+package net.thequester.websupport.database.providers;
 
 import net.thequester.websupport.IFileManager;
-import net.thequester.websupport.model.QUser;
+import net.thequester.websupport.database.repositories.UserRepository;
 import net.thequester.websupport.model.User;
-
-import java.util.List;
 
 import static net.thequester.websupport.model.QUser.*;
 

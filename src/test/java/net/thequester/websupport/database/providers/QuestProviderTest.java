@@ -1,6 +1,6 @@
-package net.thequester.websupport;
+package net.thequester.websupport.database.providers;
 
-import net.thequester.websupport.database.repositories.QuestProvider;
+import net.thequester.websupport.SystemTestConfiguration;
 import net.thequester.websupport.database.repositories.QuestRepository;
 import net.thequester.websupport.model.Filter;
 import net.thequester.websupport.model.QuestDetails;

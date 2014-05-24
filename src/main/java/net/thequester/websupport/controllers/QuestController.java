@@ -1,7 +1,7 @@
 package net.thequester.websupport.controllers;
 
 import com.google.common.collect.Lists;
-import net.thequester.websupport.database.repositories.QuestProvider;
+import net.thequester.websupport.database.providers.QuestProvider;
 import net.thequester.websupport.model.Filter;
 import net.thequester.websupport.model.QuestDetails;
 import org.apache.commons.io.IOUtils;
